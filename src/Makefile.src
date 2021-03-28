@@ -4,10 +4,8 @@
 # across a range of different makefiles, to cut down on maintenance.
 #
 
-NAME = nppangband
 VERSION = 0.5.4
 COPYRIGHT = (c) 1995-2012 NPPAngband and Angband contributors
-PROGNAME = angband
 
 HEADERS = \
 	angband.h \

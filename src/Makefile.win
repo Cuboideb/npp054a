@@ -7,9 +7,6 @@
 # Try "make CONSOLE=yes" to use PDCurses, as long as you set
 # PDCURSES_INCLUDE_DIR and PDCURSES_LIB.
 #
-# For a better looking Windows console, follow the instructions at
-# https://trac.rephial.org/wiki/Compiling
-#
 # Other options:
 #   OBJ_DIR=x will place .o files into directory 'x'
 #   MINGW=yes will use the mingw compiler
@@ -19,22 +16,14 @@
 EXE = nppangband.exe
 all: ../$(EXE)
 
-ifneq (,$(findstring \SYSTEM32,$(PATH)))
-  dos = TRUE
-endif
 ifneq (,$(findstring \system32,$(PATH)))
-  dos = TRUE
-endif
-
-ifdef dos
   CP = copy
   RM = del
-  BAR = "\"
 else
   CP = -cp
   RM = -rm
-  BAR = "/"
 endif
+
 
 ifndef MINGW
   CYGWIN=yes
@@ -42,7 +31,6 @@ endif
 
 # Include list of object files and add system-specific ones
 include Makefile.inc
-MAINFILES="$(WINMAINFILES)"
 
 ifdef CONSOLE
   CFLAGS = -DUSE_GCU -DWIN32_CONSOLE_MODE -I$(PDCURSES_INC)
@@ -52,21 +40,16 @@ ifdef CONSOLE
   #PDCURSES_INC = ../../pdcurses/include
   #PDCURSES_LIB = ../../pdcurses/lib/pdcurses.a
 else
-  CFLAGS = -DWINDOWS -static
-
-  #CFLAGS += -Iwin/include -Lwin/lib
-  #LDFLAGS += -Lwin/lib
-
-  IOBJS = $(BASEOBJS) $(PROGNAME).res $(SOUNDFILES) main-win.o readdib.o
-  #LIBS = -mwindows -lwinmm -lzlib -llibpng -lmsimg32
-  LIBS = -mwindows -lwinmm
+  CFLAGS = -DWINDOWS
+  IOBJS = $(BASEOBJS) angband.res main-win.o readdib.o
+  LIBS = -s -mwindows -lwinmm
 endif
 
 CC = $(CROSS)gcc
 WRES = $(CROSS)windres
-WARNINGS = -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers
-#CFLAGS += $(WARNINGS) -std=c99 -DUSE_PRIVATE_PATHS -DSOUND -O2 -I.
-CFLAGS += $(WARNINGS) -std=c99 -DUSE_PRIVATE_PATHS -DSOUND -g -I.
+WARNINGS = -Wall -Wextra -Wno-unused-parameter
+CFLAGS += $(WARNINGS) -std=iso9899:199409 -pedantic -O2 -I.
+LIBS += -s
 
 ifdef BUILD_ID
   CFLAGS += -DBUILD_ID="$(BUILD_ID)"
@@ -79,7 +62,7 @@ ifdef CYGWIN
 
   # Note the additional -DNEAR= flag to cope with the 'NEAR'
   # keyword used in readdib.c
-  readdib.o: readdib.c readdib.h
+  win/readdib.o: win/readdib.c win/readdib.h
 	$(CC) $(CFLAGS) -DNEAR= $(INCDIRS) -c -o $@ $<
 
 endif
@@ -111,19 +94,20 @@ endif
 #
 
 ../$(EXE): $(EXE)
-	$(CP) $(EXE) ..	
+	$(CP) $(EXE) ..
 
 $(EXE): $(OBJS)
-	$(CC) $(CFLAGS) -o $(EXE) $(OBJS) $(LIBS)
+	$(CC) -o $(EXE) $(OBJS) $(LIBS)
 
 clean:
-	$(RM) -f $(EXE) $(OBJS)	
+	$(RM) -f $(EXE) $(OBJS)
+
 
 #
 # Rules
 #
 
-$(PROGNAME).res: $(PROGNAME).rc
+angband.res: angband.rc
 	$(WRES) $< -O coff -o $@
 
 $(OBJDIR)%.o: %.c $(INCS)
