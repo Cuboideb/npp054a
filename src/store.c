@@ -4849,7 +4849,7 @@ void do_cmd_store(cmd_code code, cmd_arg args[])
 			else
 			{
 				/* These two can't intersect! */
-				menu.cmd_keys = "\n\x010\r?={}~CEIbdegiklpstw\x8B\x8C"; /* \x10 = ^p */
+				menu.cmd_keys = "\n\x010\r?={}~CEIbdegiklpstwx\x8B\x8C"; /* \x10 = ^p */
 				menu.selections = "acfhmnoqruvyz13456790ABDFGHJKLMNO";
 			}
 
