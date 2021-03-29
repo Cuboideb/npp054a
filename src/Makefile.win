@@ -42,14 +42,16 @@ ifdef CONSOLE
 else
   CFLAGS = -DWINDOWS
   IOBJS = $(BASEOBJS) angband.res main-win.o readdib.o
-  LIBS = -s -mwindows -lwinmm
+  #LIBS = -s -mwindows -lwinmm
+  LIBS = -mwindows -lwinmm
 endif
 
 CC = $(CROSS)gcc
 WRES = $(CROSS)windres
 WARNINGS = -Wall -Wextra -Wno-unused-parameter
-CFLAGS += $(WARNINGS) -std=iso9899:199409 -pedantic -O2 -I.
-LIBS += -s
+#CFLAGS += $(WARNINGS) -std=iso9899:199409 -pedantic -O2 -I.
+CFLAGS += $(WARNINGS) -std=iso9899:199409 -pedantic -g -I.
+#LIBS += -s
 
 ifdef BUILD_ID
   CFLAGS += -DBUILD_ID="$(BUILD_ID)"
