@@ -4695,6 +4695,7 @@ static bool store_process_command(char cmd, void *db, int oid)
 
 			if (current_cmd == 'x' || current_cmd == 'l') {
 				store_examine(oid);
+				redraw = TRUE;
 			}
 
 			break;
