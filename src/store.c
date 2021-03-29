@@ -1792,7 +1792,7 @@ static bool store_object_similar(const object_type *o_ptr, const object_type *j_
 	/*Allow well balanced items to stack only with other
 			 *well balanced items*/
 	if ((o_ptr->ident & IDENT_PERFECT_BALANCE) !=
-        (o_ptr->ident & IDENT_PERFECT_BALANCE)) return (FALSE);
+        (j_ptr->ident & IDENT_PERFECT_BALANCE)) return (FALSE);
 
 	/* Different flags */
 	if ((f1 != j1) || (f2 != j2) || \

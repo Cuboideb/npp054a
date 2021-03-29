@@ -629,7 +629,7 @@ static void prt_mon_mana(int row, int col)
 	}
 
 	/* Tracking a dead monster (?) */
-	else if (!mon_list[p_ptr->health_who].hp < 0)
+	else if (mon_list[p_ptr->health_who].hp < 0)
 	{
 
 		/* Indicate that the monster health is "unknown" */

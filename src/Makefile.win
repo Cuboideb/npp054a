@@ -48,7 +48,7 @@ endif
 
 CC = $(CROSS)gcc
 WRES = $(CROSS)windres
-WARNINGS = -Wall -Wextra -Wno-unused-parameter
+WARNINGS = -Wall -Wextra -Wno-unused-parameter -Wno-implicit-fallthrough
 #CFLAGS += $(WARNINGS) -std=iso9899:199409 -pedantic -O2 -I.
 CFLAGS += $(WARNINGS) -std=iso9899:199409 -pedantic -g -I.
 #LIBS += -s
