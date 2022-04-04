@@ -1468,7 +1468,7 @@ static int collect_known_artifacts(int *artifacts, size_t artifacts_len)
 	for (j = 0; j < z_info->art_max; j++)
 	{
 		/* Artifact doesn't exist */
-		if (!a_info[j].name) continue;
+		if (!a_info[j].name[0]) continue;
 
 		if ((cheat_xtra) || artifact_is_known(j))
 		{
